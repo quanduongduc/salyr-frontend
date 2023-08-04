@@ -1,0 +1,5 @@
+{
+    "import/resolver": {
+      "babel-module": {} // Use the correct resolver type
+    }
+}
