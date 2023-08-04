@@ -1,22 +1,19 @@
 import useLoadImage from "@/hooks/useLoadImage";
-import { Song } from "@/src/types";
+import { Song } from "@/types";
 
 import PlayButton from "./PlayButton";
 
 interface SongItemProps {
   data: Song;
-  onClick: (id: string) => void;
+  onClick: (song: Song) => void;
 }
 
-const SongItem: React.FC<SongItemProps> = ({
-  data,
-  onClick
-}) => {
+const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
   const imagePath = useLoadImage(data);
 
-  return ( 
+  return (
     <div
-      onClick={() => onClick(data.id)} 
+      onClick={() => onClick(data)}
       className="
         relative 
         group 
@@ -34,7 +31,7 @@ const SongItem: React.FC<SongItemProps> = ({
         p-3
       "
     >
-      <div 
+      <div
         className="
           relative 
           aspect-square 
@@ -46,14 +43,13 @@ const SongItem: React.FC<SongItemProps> = ({
       >
         <img
           className="object-cover"
-          src={imagePath || '/images/music-placeholder.png'}
-          alt="song_image"></img>
+          src={imagePath || "/images/music-placeholder.png"}
+          alt="song_image"
+        ></img>
       </div>
       <div className="flex flex-col items-start w-full pt-4 gap-y-1">
-        <p className="font-semibold truncate w-full">
-          {data.title}
-        </p>
-        <p 
+        <p className="font-semibold truncate w-full">{data.title}</p>
+        <p
           className="
             text-neutral-400 
             text-sm 
@@ -65,7 +61,7 @@ const SongItem: React.FC<SongItemProps> = ({
           By {data.author}
         </p>
       </div>
-      <div 
+      <div
         className="
           absolute 
           bottom-24 
@@ -75,7 +71,7 @@ const SongItem: React.FC<SongItemProps> = ({
         <PlayButton />
       </div>
     </div>
-   );
-}
- 
+  );
+};
+
 export default SongItem;

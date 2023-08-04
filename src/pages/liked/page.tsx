@@ -4,15 +4,24 @@
 import Header from "@/components/Header";
 
 import LikedContent from "./LikedContent";
-import { Song } from "@/src/types";
+import { Song } from "@/types";
 
 export const revalidate = 0;
 
-const Liked = async () => {
-  const songs : [] = [] //await getLikedSongs();
+const Liked = () => {
+  const songs: Song[] = [
+    {
+      id: "123",
+      user_id: "123",
+      author: "Hello",
+      title: "Hello",
+      song_path: "./song.mp3",
+      image_path: "./images/liked.png",
+    },
+  ]; //await getLikedSongs();
 
   return (
-    <div 
+    <div
       className="
         bg-neutral-900 
         rounded-lg 
@@ -24,7 +33,7 @@ const Liked = async () => {
     >
       <Header>
         <div className="mt-20">
-          <div 
+          <div
             className="
               flex 
               flex-col 
@@ -41,10 +50,8 @@ const Liked = async () => {
               />
             </div>
             <div className="flex flex-col gap-y-2 mt-4 md:mt-0">
-              <p className="hidden md:block font-semibold text-sm">
-                Playlist
-              </p>
-              <h1 
+              <p className="hidden md:block font-semibold text-sm">Playlist</p>
+              <h1
                 className="
                   text-white 
                   text-4xl 
@@ -62,6 +69,6 @@ const Liked = async () => {
       <LikedContent songs={songs} />
     </div>
   );
-}
+};
 
 export default Liked;

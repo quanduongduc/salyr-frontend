@@ -5,7 +5,7 @@ import { useEffect, useState, createContext, useContext } from 'react';
 //   User
 // } from '@supabase/auth-helpers-react';
 
-import { UserDetails, Subscription, User } from '@/src/types';
+import { UserDetails, Subscription, User } from '@/types';
 
 type UserContextType = {
   accessToken: string | null;
@@ -30,7 +30,9 @@ export const MyUserContextProvider = (props: Props) => {
   //   isLoading: isLoadingUser,
   //   supabaseClient: supabase
   // } = useSessionContext();
-  // const user = useSupaUser();
+  const user : User = {
+    id: "123"
+  }
   // const accessToken = session?.access_token ?? null;
   const [isLoadingData, setIsloadingData] = useState(false);
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
@@ -69,7 +71,7 @@ export const MyUserContextProvider = (props: Props) => {
 
   const value = {
     accessToken: null,
-    user: null,
+    user: user,
     userDetails,
     isLoading: null || isLoadingData,
     subscription

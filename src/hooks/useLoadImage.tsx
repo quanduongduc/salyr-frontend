@@ -1,5 +1,5 @@
 
-import { Song } from "@/src/types";
+import { Song } from "@/types";
 
 const useLoadImage = (song: Song) => {
 

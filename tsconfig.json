@@ -17,12 +17,13 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@/src/*" : ["./src/*"],
+      "@/*" : ["./*"],
       "@/components/*": ["./src/components/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/hooks/*": ["./src/hooks/*"],
       "@/router/*": ["./src/router/*"],
       "@/providers/*": ["./src/providers/*"],
+      "@/reducers/*": ["./src/reducers/*"],
       "@/pages/*": ["./src/pages/*"]
       // Add more aliases as needed
     },

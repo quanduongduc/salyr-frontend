@@ -1,14 +1,17 @@
-import React from 'react';
+import "./App.css";
+import Layout from "./pages/layout/Layout";
+import ToasterProvider from "./providers/ToasterProvider";
+import UserProvider from "./providers/UserProvider";
 
-import './App.css';
-import Layout from './pages/layout/Layout';
-
-
-function App() {
+export function App() {
   return (
-    <div className="App">
-      <Layout/>
-    </div>
+    <>
+      <ToasterProvider />
+      <UserProvider>
+        {/* <ModalProvider products={products} /> */}
+        <Layout />
+      </UserProvider>
+    </>
   );
 }
 

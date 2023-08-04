@@ -13,24 +13,19 @@ interface ListItemProps {
   href: string;
 }
 
-const ListItem: React.FC<ListItemProps> = ({
-  image,
-  name,
-  href,
-}) => {
+const ListItem: React.FC<ListItemProps> = ({ image, name, href }) => {
   // const router = useRouter();
   const authModal = useAuthModal();
   const { user } = useUser();
-  
+
   const onClick = () => {
     // if (!user) {
     //   return authModal.onOpen();
     // }
-
     // router.push(href);
   };
 
-  return ( 
+  return (
     <button
       onClick={onClick}
       className="
@@ -48,18 +43,11 @@ const ListItem: React.FC<ListItemProps> = ({
         pr-4
       "
     >
-      <div className="relative min-h-[64px] min-w-[64px]">
-        {/* <Image
-          className="object-cover"
-          src={image}
-          fill
-          alt="Image"
-        /> */}
+      <div className="relative max-h-[64px] max-w-[64px]">
+        <img className="object-cover" src={image} alt="liked_icon" />
       </div>
-      <p className="font-medium truncate py-5">
-        {name}
-      </p>
-      <div 
+      <p className="font-medium truncate py-5">{name}</p>
+      <div
         className="
           absolute 
           transition 
@@ -79,7 +67,7 @@ const ListItem: React.FC<ListItemProps> = ({
         <FaPlay className="text-black" />
       </div>
     </button>
-   );
-}
- 
+  );
+};
+
 export default ListItem;

@@ -1,4 +1,4 @@
-import { Price } from "src/types";
+import { Price } from "@/types";
 export const getURL = () => {
     let url =
         process.env.API_URL ? process.env.API_URL : "localhost:3000";

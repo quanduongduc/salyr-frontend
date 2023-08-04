@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 // import { useSessionContext } from "@supabase/auth-helpers-react";
-import { Song } from "@/src/types";
+import { Song } from "@/types";
 
 const useSongById = (id?: string) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,6 +13,14 @@ const useSongById = (id?: string) => {
       return;
     }
 
+    setSong({
+      id: "123",
+      user_id: "123",
+      author: "Hello",
+      title: "Hello",
+      song_path: "./song.mp3",
+      image_path: "./images/liked.png",
+    });
     setIsLoading(true);
 
     // const fetchSong = async () => {
@@ -37,10 +45,13 @@ const useSongById = (id?: string) => {
     // supabaseClient
   ]);
 
-  return useMemo(() => ({
-    isLoading,
-    song
-  }), [isLoading, song]);
+  return useMemo(
+    () => ({
+      isLoading,
+      song,
+    }),
+    [isLoading, song]
+  );
 };
 
 export default useSongById;
