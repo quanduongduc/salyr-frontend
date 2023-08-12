@@ -54,7 +54,9 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
       </div>
       <div className="flex flex-col gap-y-1 overflow-hidden">
         <p className="text-white truncate">{data.title}</p>
-        <p className="text-neutral-400 text-sm truncate">By {data.author}</p>
+        <p className="text-neutral-400 text-sm truncate">
+          By {data.artists && data.artists.map((artist) => artist.name).join("-")}
+        </p>
       </div>
     </div>
   );

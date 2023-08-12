@@ -26,11 +26,11 @@ const router = createBrowserRouter([
         path: "/Liked",
         element: <Liked />,
       },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
     ],
-  },
-  {
-    path: "*",
-    element: <NotFound />,
   },
 ]);
 

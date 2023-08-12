@@ -2,10 +2,7 @@
 
 import { twMerge } from "tailwind-merge";
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
-// import { useRouter } from "next/navigation";
 import { useNavigate } from "react-router-dom";
-import { FaUserAlt } from "react-icons/fa";
-// import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 
@@ -14,6 +11,8 @@ import { useUser } from "@/hooks/useUser";
 import usePlayer from "@/hooks/usePlayer";
 
 import Button from "./Button";
+import toast from "react-hot-toast";
+import { useAuth } from "../hooks/useAuth";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -24,18 +23,18 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   const player = usePlayer();
   const navigate = useNavigate();
   const authModal = useAuthModal();
+  const auth = useAuth();
 
-  // const supabaseClient = useSupabaseClient();
   const { user } = useUser();
 
   const handleLogout = async () => {
-    // const { error } = await supabaseClient.auth.signOut();
-    player.reset();
-    navigate(0);
-
-    // if (error) {
-    // toast.error(error.message);
-    // }
+    try {
+      await auth.logout();
+      player.reset();
+      navigate(0);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -53,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
       <div className="w-full mb-4 flex items-center justify-between">
         <div className="hidden md:flex gap-x-2 items-center">
           <button
-            // onClick={() => router.back()}
+            onClick={() => navigate(-1)}
             className="
               rounded-full 
               bg-black 
@@ -68,7 +67,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
             <RxCaretLeft className="text-white" size={35} />
           </button>
           <button
-            // onClick={() => router.forward()}
+            onClick={() => navigate(1)}
             className="
               rounded-full 
               bg-black 
@@ -85,7 +84,6 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
         </div>
         <div className="flex md:hidden gap-x-2 items-center">
           <button
-            // onClick={() => router.push('/')}
             className="
               rounded-full 
               p-2 
@@ -101,7 +99,6 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
             <HiHome className="text-black" size={20} />
           </button>
           <button
-            // onClick={() => router.push('/search')}
             className="
               rounded-full 
               p-2 
@@ -123,27 +120,16 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
               <Button onClick={handleLogout} className="bg-white px-6 py-2">
                 Logout
               </Button>
-              <Button
-                // onClick={() => router.push('/account')}
-                className="bg-white"
-              >
-                <FaUserAlt />
+              <Button onClick={() => navigate("/account")}>
+                <img
+                  src={user.avatar_url}
+                  alt="User Avatar"
+                  className="m-0 rounded-full w-8 h-8 md:w-12 md:h-12 lg:w-12 lg:h-12 object-fill"
+                />
               </Button>
             </div>
           ) : (
             <>
-              <div>
-                <Button
-                  onClick={authModal.onOpen}
-                  className="
-                    bg-transparent 
-                    text-neutral-300 
-                    font-medium
-                  "
-                >
-                  Sign up
-                </Button>
-              </div>
               <div>
                 <Button
                   onClick={authModal.onOpen}

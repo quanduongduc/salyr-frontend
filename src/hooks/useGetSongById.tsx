@@ -14,12 +14,13 @@ const useSongById = (id?: string) => {
     }
 
     setSong({
-      id: "123",
-      user_id: "123",
-      author: "Hello",
+      id: 123,
       title: "Hello",
-      song_path: "./song.mp3",
-      image_path: "./images/liked.png",
+      url: "./song.mp3",
+      theme_url: "./images/liked.png",
+      release_date: new Date(),
+      genre: "Pop",
+      duration: 222,
     });
     setIsLoading(true);
 

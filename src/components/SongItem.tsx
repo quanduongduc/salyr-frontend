@@ -58,7 +58,8 @@ const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
             truncate
           "
         >
-          By {data.author}
+          By{" "}
+          {data.artists && data.artists.map((artist) => artist.name).join(",")}
         </p>
       </div>
       <div

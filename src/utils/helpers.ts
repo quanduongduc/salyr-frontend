@@ -1,7 +1,9 @@
-import { Price } from "@/types";
-export const getURL = () => {
+import axios, { AxiosError } from 'axios';
+import { toast } from 'react-hot-toast';
+
+const getURL = () => {
     let url =
-        process.env.API_URL ? process.env.API_URL : "localhost:3000";
+        process.env.API_URL ? process.env.API_URL : "http://localhost:8000";
     // Make sure to include `https://` when not localhost.
     url = url.includes('http') ? url : `https://${url}`;
     // Make sure to including trailing `/`.
@@ -11,27 +13,40 @@ export const getURL = () => {
 
 export const postData = async ({
     url,
-    data
+    data,
+    contentType
 }: {
     url: string;
-    data?: { price: Price };
+    data?: any;
+    contentType?: string;
 }) => {
-    console.log('posting,', url, data);
+    try {
+        const response = await axios.post(url, data, {
+            headers: {
+                'Content-Type': contentType ? contentType : 'application/json'
+            }
+        });
 
-    const res: Response = await fetch(url, {
-        method: 'POST',
-        headers: new Headers({ 'Content-Type': 'application/json' }),
-        credentials: 'same-origin',
-        body: JSON.stringify(data)
-    });
+        return response.data;
+    } catch (error: any) {
+        console.log('Error in postData', { url, data, error });
 
-    if (!res.ok) {
-        console.log('Error in postData', { url, data, res });
-
-        throw Error(res.statusText);
+        throw error
     }
+};
 
-    return res.json();
+export const getData = async (url: string) => {
+    console.log('fetching:', url);
+
+    try {
+        const response = await axios.get(url);
+
+        return response.data;
+    } catch (error: any) {
+        console.log('Error in getData', { url, error });
+
+        throw error
+    }
 };
 
 export const toDateTime = (secs: number) => {
@@ -39,3 +54,22 @@ export const toDateTime = (secs: number) => {
     t.setSeconds(secs);
     return t;
 };
+
+type ErrorResponse = {
+    detail: string
+}
+
+export const resolveResponseError = (error: any) => {
+    if (axios.isAxiosError(error)) {
+        // Handle Axios specific errors
+        const axiosError: AxiosError<ErrorResponse> = error
+        if (axiosError.response) {
+            toast.error(axiosError.response.data.detail);
+        }
+    } else {
+        toast.error(error.message)
+    }
+
+}
+
+export const API_URL = getURL()

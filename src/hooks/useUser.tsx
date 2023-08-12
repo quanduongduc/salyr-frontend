@@ -1,20 +1,21 @@
-import { useEffect, useState, createContext, useContext } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState, createContext, useContext } from "react";
 // import {
 //   useUser as useSupaUser,
 //   useSessionContext,
 //   User
 // } from '@supabase/auth-helpers-react';
 
-import { UserDetails, Subscription, User } from '@/types';
+import { User } from "@/types";
+import { API_URL, getData } from "../utils/helpers";
+import { useAuth } from "./useAuth";
+import toast from "react-hot-toast";
 
 type UserContextType = {
-  accessToken: string | null;
   user: User | null;
-  userDetails: UserDetails | null;
   isLoading: boolean;
-  subscription: Subscription | null;
+  authenticated: boolean;
 };
-
 
 export interface Props {
   [propName: string]: any;
@@ -25,62 +26,54 @@ export const UserContext = createContext<UserContextType | undefined>(
 );
 
 export const MyUserContextProvider = (props: Props) => {
-  // const {
-  //   session,
-  //   isLoading: isLoadingUser,
-  //   supabaseClient: supabase
-  // } = useSessionContext();
-  const user : User = {
-    id: "123"
-  }
-  // const accessToken = session?.access_token ?? null;
   const [isLoadingData, setIsloadingData] = useState(false);
-  const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
-  const [subscription, setSubscription] = useState<Subscription | null>(null);
+  const [authenticated, setAuthenticated] = useState(false);
+  const auth = useAuth();
 
-  // const getUserDetails = () => supabase.from('users').select('*').single();
-  // const getSubscription = () =>
-  //   supabase
-  //     .from('subscriptions')
-  //     .select('*, prices(*, products(*))')
-  //     .in('status', ['trialing', 'active'])
-  //     .single();
-
-  // useEffect(() => {
-  //   // if (user && !isLoadingData && !userDetails && !subscription) {
-  //   //   setIsloadingData(true);
-  //   //   Promise.allSettled([getUserDetails(), getSubscription()]).then(
-  //   //     (results) => {
-  //   //       const userDetailsPromise = results[0];
-  //   //       const subscriptionPromise = results[1];
-
-  //   //       if (userDetailsPromise.status === 'fulfilled')
-  //   //         setUserDetails(userDetailsPromise.value.data as UserDetails);
-
-  //   //       if (subscriptionPromise.status === 'fulfilled')
-  //   //         setSubscription(subscriptionPromise.value.data as Subscription);
-
-  //   //       setIsloadingData(false);
-  //   //     }
-  //   //   );
-  //   // } else if (!user && !isLoadingUser && !isLoadingData) {
-  //   //   setUserDetails(null);
-  //   //   setSubscription(null);
-  //   // }
-  // }, [user, isLoadingUser]);
-
-  const value = {
-    accessToken: null,
-    user: user,
-    userDetails,
-    isLoading: null || isLoadingData,
-    subscription
+  const getUserDetails = async () => {
+    try {
+      const response = await getData(`${API_URL}users/me`);
+      return response;
+    } catch (error: any) {
+      if (error.response && error.response.status === 403) {
+        localStorage.removeItem("accessToken");
+        await auth.refreshTokenFunc();
+      } else {
+      }
+    }
   };
 
-  return <UserContext.Provider value={value} {...props}/>
+  const [userDetails, setUserDetails] = useState<User | null>(null);
+  useEffect(() => {
+    if (!isLoadingData && !userDetails) {
+      setIsloadingData(true);
+      Promise.resolve(getUserDetails())
+        .then((results) => {
+          setAuthenticated(true);
+          setUserDetails(results as User);
+          setIsloadingData(false);
+        })
+        .catch((error) => {
+          console.error(error); // Handle any errors from the async function
+          setAuthenticated(false);
+          setUserDetails(null);
+          setIsloadingData(false);
+        });
+    } else if (!isLoadingData) {
+      setUserDetails(null);
+    }
+  }, []);
+
+  const value = {
+    user: userDetails,
+    isLoading: null || isLoadingData,
+    authenticated: authenticated,
+  };
+
+  return <UserContext.Provider value={value} {...props} />;
 };
 
-export const useUser = () => {
+export const useUser = (): UserContextType => {
   const context = useContext(UserContext);
   if (context === undefined) {
     throw new Error(`useUser must be used within a MyUserContextProvider.`);

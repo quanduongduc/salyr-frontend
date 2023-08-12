@@ -12,7 +12,7 @@ const SongInfo: React.FC<SongInfoProps> = ({ song }) => {
     <>
       <div className="flex items-center gap-x-4">
         <MediaItem data={song} />
-        <LikeButton songId={song.id} />
+        <LikeButton songId={song.id.toString()} />
       </div>
     </>
   );

@@ -49,7 +49,7 @@ const Player: React.FC<PlayerProps> = ({
 
   return (
     <audio
-      src={activeSong.song_path}
+      src={activeSong.url}
       ref={ref}
       loop={repeat}
       onEnded={onEnded}

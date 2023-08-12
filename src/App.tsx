@@ -1,5 +1,6 @@
 import "./App.css";
 import Layout from "./pages/layout/Layout";
+import ModalProvider from "./providers/ModalProvider";
 import ToasterProvider from "./providers/ToasterProvider";
 import UserProvider from "./providers/UserProvider";
 
@@ -8,6 +9,7 @@ export function App() {
     <>
       <ToasterProvider />
       <UserProvider>
+        <ModalProvider />
         {/* <ModalProvider products={products} /> */}
         <Layout />
       </UserProvider>
