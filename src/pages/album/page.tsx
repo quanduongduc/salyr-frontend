@@ -2,15 +2,14 @@
 import SearchInput from "@/components/SearchInput";
 import Header from "@/components/Header";
 
-import SearchContent from "./SearchContent";
+import SearchContent from "./AlbumContent";
 import { Song } from "@/types";
 import { song1, song2 } from "@/utils/mockData";
+import { useParams } from "react-router-dom";
 
-export const revalidate = 0;
-
-const Search = () => {
+const AlbumPage = () => {
+  const id = useParams();
   const songs: Song[] = [song1, song2]; //await getSongsByTitle(searchParams.title);
-
   return (
     <div
       className="
@@ -24,8 +23,7 @@ const Search = () => {
     >
       <Header className="from-bg-neutral-900">
         <div className="mb-2 flex flex-col gap-y-6">
-          <h1 className="text-white text-3xl font-semibold">Search</h1>
-          <SearchInput />
+          <h1 className="text-white text-3xl font-semibold">Album</h1>
         </div>
       </Header>
       <SearchContent songs={songs} />
@@ -33,4 +31,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default AlbumPage;

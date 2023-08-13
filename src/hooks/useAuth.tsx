@@ -5,7 +5,6 @@ import {
   postData,
   resolveResponseError,
 } from "../utils/helpers";
-import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export const useAuth = () => {

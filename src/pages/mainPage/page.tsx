@@ -3,32 +3,22 @@ import Header from "@/components/Header";
 import ListItem from "@/components/ListItem";
 
 import PageContent from "./PageContent";
-import { Song } from "@/types";
+import { Link, useOutletContext } from "react-router-dom";
+import { GlobalData } from "../layout/Layout";
 
-export const revalidate = 0;
 
-export default function Home() {
-  const songs: Song[] = [
-    {
-      id: 123,
-      title: "Hello",
-      url: "./song.mp3",
-      theme_url: "./images/liked.png",
-      release_date: new Date(),
-      genre: "Pop",
-      duration: 222,
-    },
-  ]; //await getSongs();
-
+const Home = () => {
+  const globalData = useOutletContext<GlobalData>();
   return (
     <div
-      className="
+      className="custom-scrollbar
         bg-neutral-900 
         rounded-lg 
+        max-h-screen
         h-full 
         w-full 
         overflow-hidden 
-        overflow-y-auto
+        overflow-y-scroll
       "
     >
       <Header>
@@ -53,20 +43,21 @@ export default function Home() {
               mt-4
             "
           >
-            <ListItem
-              name="Liked Songs"
-              image="/images/liked.png"
-              href="liked"
-            />
+            <Link to={"/liked"}>
+              <ListItem
+                name="Liked Songs"
+                image="/images/liked.png"
+                href="liked"
+              />
+            </Link>
           </div>
         </div>
       </Header>
-      <div className="mt-2 mb-7 px-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-white text-2xl font-semibold">Newest songs</h1>
-        </div>
-        <PageContent songs={songs} />
+      <div className="grid gap-8 mt-2 mb-7 px-6">
+        <PageContent songs={globalData.songs} albums={globalData.albums} artists={globalData.artists} />
       </div>
     </div>
   );
 }
+
+export default Home

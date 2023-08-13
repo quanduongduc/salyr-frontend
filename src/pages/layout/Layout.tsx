@@ -1,55 +1,60 @@
-import React from "react";
-
-// import { Figtree } from 'next/font/google'
-
-// import getSongsByUserId from '@/actions/getSongsByUserId'
-
-// import getActiveProductsWithPrices from '@/actions/getActiveProductsWithPrices'
+import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
-// import ModalProvider from '@/providers/ModalProvider'
-// import SupabaseProvider from '@/providers/SupabaseProvider'
 import MusicPlayer from "@/components/MusicPlayer";
 
-import "./globals.css";
 import { Outlet } from "react-router-dom";
-import { Song } from "@/types";
+import { Album, Artist, Song } from "@/types";
 import usePlayer from "@/hooks/usePlayer";
+import { song1, song2 } from "@/utils/mockData";
+import { API_URL, getData } from "@/utils/helpers";
 
-// const font = Figtree({ subsets: ['latin'] })
-
-export const metadata = {
-  title: "Spotify Clone",
-  description: "Spotify Clone",
-};
-
-export const revalidate = 0;
+export interface GlobalData {
+  songs: Song[];
+  albums: Album[];
+  artists: Artist[];
+}
 
 export default function Layout() {
   // const products = await getActiveProductsWithPrices();
   const player = usePlayer();
-  const userSongs: Song[] = [
-    {
-      id: 123,
-      title: "Hello",
-      url: "./song.mp3",
-      theme_url: "./images/liked.png",
-      release_date: new Date(),
-      genre: "Pop",
-      duration: 222,
-    },
-  ]; //await getSongsByUserId();
+  const userSongs: Song[] = [song1, song2]; //playlist placeholder
+  const [globalData, setGlobalData] = useState<GlobalData>({songs:[], albums:[], artists:[]})
 
+  async function getHomeData() {
+    const getSongsPromise : Promise<Song[]> = getData(`${API_URL}songs/query`)
+    const getAlbumsPromise : Promise<Album[]> = getData(`${API_URL}albums/query`)
+    const getArtistsPromise : Promise<Artist[]> = getData(`${API_URL}artists/query`)
+    // const getPlaylistPromise : Promise<Song[]> = getData(`${API_URL}playlists/query`)
+
+    const responses =  await Promise.allSettled([getSongsPromise, getAlbumsPromise, getArtistsPromise])
+    const [songs, albums, artists] =  responses.map(result => {
+      if (result.status !== "fulfilled") {
+        return []
+      } else {
+        return(result as PromiseFulfilledResult<any>).value
+      }
+    });
+
+    return {
+      songs, albums, artists
+    }
+  }
+
+     
+  useEffect(() => {
+    getHomeData().then(data => setGlobalData({
+      songs: data.songs,
+      albums: data.albums,
+      artists: data.artists
+    }))
+  },[])
   return (
     <>
       {/* <ModalProvider products={products} /> */}
       <Sidebar songs={userSongs}>
-        <Outlet></Outlet>
+        <Outlet context={globalData}></Outlet>
       </Sidebar>
       {player.isActive && <MusicPlayer />}
     </>
   );
-}
-
-function Figtree(arg0: { subsets: string[] }) {
-  throw new Error("Function not implemented.");
 }

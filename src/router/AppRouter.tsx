@@ -1,9 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import NotFound from "../pages/notfound/page";
-import Search from "../pages/search/page";
-import Liked from "../pages/liked/page";
-import Home from "../pages/mainPage/page";
+import NotFound from "@/pages/notfound/page";
+import Search from "@/pages/search/page";
+import Liked from "@/pages/liked/page";
+import Home from "@/pages/mainPage/page";
+import Account from "@/pages/account/page";
+import AlbumPage from "@/pages/album/page";
+import ArtistPage from "@/pages/artist/page";
 
 const router = createBrowserRouter([
   {
@@ -19,19 +22,24 @@ const router = createBrowserRouter([
         element: <Search />,
       },
       {
-        path: "/Liked",
+        path: "/liked",
         element: <Liked />,
       },
       {
-        path: "/Liked",
-        element: <Liked />,
+        path: "/account",
+        element: <Account />,
       },
       {
-        path: "*",
-        element: <NotFound />,
+        path: "/album/:id",
+        element: <AlbumPage />,
+      },
+      {
+        path: "/artist/:id",
+        element: <ArtistPage />,
       },
     ],
   },
+  { path: "*", element: <NotFound /> },
 ]);
 
 export default router;

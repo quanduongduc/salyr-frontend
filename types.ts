@@ -5,6 +5,7 @@ export interface User {
   avatar_url: string;
   created_at: Date;
   playlists?: Playlist[];
+  last_play?: Song
 }
 
 export interface Song {
@@ -34,8 +35,9 @@ export interface Artist {
   name: string;
   bio: string;
   genre: string;
-  albums: Album[];
-  songs: Song[];
+  avatar_url: string;
+  albums?: Album[];
+  songs?: Song[];
 }
 
 export interface Playlist {
@@ -43,6 +45,6 @@ export interface Playlist {
   user_id: number;
   title: string;
   creation_date: Date;
-  user: User;
-  songs: Song[];
+  user?: User;
+  songs?: Song[];
 }

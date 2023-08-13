@@ -6,35 +6,19 @@ import { useEffect, useState } from "react";
 import { useUser } from "@/hooks/useUser";
 import Button from "@/components/Button";
 import { postData } from "@/utils/helpers";
+import { useNavigate } from "react-router-dom";
 
 const AccountContent = () => {
-  // const router = useRouter();
+  const navigate = useNavigate();
   const { isLoading, user } = useUser();
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!isLoading && !user) {
-      // router.replace('/');
+      navigate("/");
     }
-  }, [
-    isLoading,
-    user,
-    // router
-  ]);
-
-  const redirectToCustomerPortal = async () => {
-    setLoading(true);
-    try {
-      const { url, error } = await postData({
-        url: "/api/create-portal-link",
-      });
-      window.location.assign(url);
-    } catch (error) {
-      if (error) return alert((error as Error).message);
-    }
-    setLoading(false);
-  };
+  }, [isLoading, user, navigate]);
 
   return (
     <div className="mb-7 px-6">

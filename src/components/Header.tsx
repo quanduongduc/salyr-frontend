@@ -38,18 +38,8 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   };
 
   return (
-    <div
-      className={twMerge(
-        `
-        h-fit 
-        bg-gradient-to-b 
-        from-emerald-800 
-        p-6
-        `,
-        className
-      )}
-    >
-      <div className="w-full mb-4 flex items-center justify-between">
+    <>
+      <div className="sticky left-0 top-0 w-full mb-4 flex items-center justify-between z-50 bg-neutral-900 px-3">
         <div className="hidden md:flex gap-x-2 items-center">
           <button
             onClick={() => navigate(-1)}
@@ -142,8 +132,20 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
           )}
         </div>
       </div>
-      {children}
-    </div>
+      <div
+        className={twMerge(
+          `
+        h-fit 
+        bg-gradient-to-b 
+        from-emerald-800 
+        p-6
+        `,
+          className
+        )}
+      >
+        {children}
+      </div>
+    </>
   );
 };
 

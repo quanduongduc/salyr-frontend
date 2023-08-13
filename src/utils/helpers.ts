@@ -64,7 +64,11 @@ export const resolveResponseError = (error: any) => {
         // Handle Axios specific errors
         const axiosError: AxiosError<ErrorResponse> = error
         if (axiosError.response) {
-            toast.error(axiosError.response.data.detail);
+            if (Array.isArray(axiosError.response.data.detail)) {
+                toast.error(axiosError.response.data.detail[0].msg);
+            } else {
+                toast.error(axiosError.response.data.detail);
+            }
         }
     } else {
         toast.error(error.message)

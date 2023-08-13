@@ -1,15 +1,32 @@
-import useLoadImage from "@/hooks/useLoadImage";
-import { Song } from "@/types";
+import { Album, Artist, Song } from "@/types";
 
 import PlayButton from "./PlayButton";
 
-interface SongItemProps {
-  data: Song;
-  onClick: (song: Song) => void;
+interface ContentItemProps {
+  data: Song | Album | Artist;
+  onClick: (item: Song | Album | Artist) => void;
 }
 
-const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
-  const imagePath = useLoadImage(data);
+const ContentItem: React.FC<ContentItemProps> = ({ data, onClick }) => {
+  function resolveAttributes(data: any) {
+    const cover_img_url = data.theme_url
+      ? data.theme_url
+      : data.cover_image_url
+      ? data.cover_image_url
+      : data.avatar_url;
+
+    const itemTitle = data.name ? data.name : data.title;
+    const artists = data.artists
+      ? data.artists
+      : data.artist
+      ? [data.artist]
+      : [];
+    return {
+      cover_img_url,
+      itemTitle,
+      artists,
+    };
+  }
 
   return (
     <div
@@ -43,12 +60,17 @@ const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
       >
         <img
           className="object-cover"
-          src={imagePath || "/images/music-placeholder.png"}
+          src={
+            resolveAttributes(data).cover_img_url ||
+            "/images/music-placeholder.png"
+          }
           alt="song_image"
         ></img>
       </div>
       <div className="flex flex-col items-start w-full pt-4 gap-y-1">
-        <p className="font-semibold truncate w-full">{data.title}</p>
+        <p className="font-semibold truncate w-full">
+          {resolveAttributes(data).itemTitle}
+        </p>
         <p
           className="
             text-neutral-400 
@@ -59,7 +81,9 @@ const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
           "
         >
           By{" "}
-          {data.artists && data.artists.map((artist) => artist.name).join(",")}
+          {resolveAttributes(data)
+            .artists.map((artist: Artist) => artist.name)
+            .join(",")}
         </p>
       </div>
       <div
@@ -75,4 +99,4 @@ const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
   );
 };
 
-export default SongItem;
+export default ContentItem;

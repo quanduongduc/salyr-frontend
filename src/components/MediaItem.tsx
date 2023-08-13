@@ -1,8 +1,4 @@
 "use client";
-
-// import Image from "next/image";
-
-import useLoadImage from "@/hooks/useLoadImage";
 import { Song } from "@/types";
 import usePlayer from "@/hooks/usePlayer";
 
@@ -13,7 +9,6 @@ interface MediaItemProps {
 
 const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
   const player = usePlayer();
-  const imageUrl = useLoadImage(data);
 
   const handleClick = () => {
     if (onClick) {
@@ -47,7 +42,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
         "
       >
         <img
-          src={imageUrl || "/images/music-placeholder.png"}
+          src={data.theme_url || "/images/music-placeholder.png"}
           alt="MediaItem"
           className="object-cover"
         />
@@ -55,7 +50,8 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
       <div className="flex flex-col gap-y-1 overflow-hidden">
         <p className="text-white truncate">{data.title}</p>
         <p className="text-neutral-400 text-sm truncate">
-          By {data.artists && data.artists.map((artist) => artist.name).join("-")}
+          By{" "}
+          {data.artists && data.artists.map((artist) => artist.name).join(",")}
         </p>
       </div>
     </div>
