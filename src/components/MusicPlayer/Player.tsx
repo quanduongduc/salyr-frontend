@@ -33,7 +33,7 @@ const Player: React.FC<PlayerProps> = ({
         ref.current.pause();
       }
     }
-  }, [isPlaying]);
+  }, [isPlaying, activeSong]);
 
   useEffect(() => {
     if (ref.current) {

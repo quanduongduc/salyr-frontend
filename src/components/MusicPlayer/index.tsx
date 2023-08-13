@@ -8,7 +8,7 @@ import SongInfo from "./SongInfo";
 
 const MusicPlayer: React.FC = () => {
   const player = usePlayer();
-  const { currentSongs, currentIndex, isPlaying, activeSong } = player;
+  const { queues: currentSongs, currentIndex, isPlaying, activeSong } = player;
 
   const [duration, setDuration] = useState<number>(0);
   const [seekTime, setSeekTime] = useState<number>(0);

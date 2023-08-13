@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { Song } from "@/types";
 
 interface PlayerState {
-  currentSongs: Song[];
+  queues: Song[];
   currentIndex: number;
   isActive: boolean;
   isPlaying: boolean;
@@ -10,30 +10,39 @@ interface PlayerState {
   shuffle: boolean;
 }
 
-function handlerNextSongIndex(prevState: PlayerState): number {
-  const { shuffle, currentIndex, currentSongs } = prevState;
+function handleNextSongIndex(prevState: PlayerStore): PlayerStore | Partial<PlayerStore>  {
+  const { shuffle, currentIndex, queues } = prevState;
+  let newIndex= (currentIndex + 1) % queues.length;
+  if (shuffle) {
+    newIndex =  Math.random() * queues.length;
+  }
 
-  if (!shuffle) return (currentIndex + 1) % currentSongs.length;
-
-  return Math.random() * currentSongs.length;
+  const newActiveSong = prevState.queues[newIndex]
+  return {
+    currentIndex: newIndex,
+    activeSong: newActiveSong,
+  }
 }
 
-function handlerPrevSongIndex(prevState: PlayerState): number {
-  const { currentIndex, shuffle, currentSongs } = prevState;
+function handlePrevSongIndex(prevState: PlayerStore): PlayerStore | Partial<PlayerStore> {
+  const { currentIndex, shuffle, queues } = prevState;
   let newIndex;
   if (currentIndex === 0) {
-    newIndex = currentSongs.length - 1;
+    newIndex = queues.length - 1;
   } else if (shuffle) {
-    newIndex = Math.floor(Math.random() * currentSongs.length);
+    newIndex = Math.floor(Math.random() * queues.length);
   } else {
     newIndex = currentIndex - 1;
   }
-
-  return newIndex;
+  const newActiveSong = prevState.queues[newIndex]
+  return {
+    currentIndex: newIndex,
+    activeSong: newActiveSong,
+  }
 }
 
 const initialState = {
-  currentSongs: [],
+  queues: [],
   currentIndex: 0,
   isActive: false,
   isPlaying: false,
@@ -53,7 +62,7 @@ interface PlayerStore extends PlayerState {
   setPlayingState: (state: boolean) => void;
   nextSongIndex: () => void;
   prevSongIndex: () => void;
-  setCurrentSongs: (songs: Song[]) => void;
+  setQueues: (songs: Song[]) => void;
   setActiveSong: (song: Song) => void;
   active: () => void;
   reset: () => void;
@@ -64,13 +73,13 @@ const usePlayer = create<PlayerStore>((set) => ({
   setPlayingState: (playing_state: boolean) =>
     set({ isPlaying: playing_state }),
   nextSongIndex: () => {
-    set((prevState) => ({ currentIndex: handlerNextSongIndex(prevState) }));
+    set((prevState: PlayerStore)=> handleNextSongIndex(prevState));
   },
   prevSongIndex: () => {
-    set((prevState) => ({ currentIndex: handlerPrevSongIndex(prevState) }));
+    set((prevState: PlayerStore) => handlePrevSongIndex(prevState));
   },
-  setCurrentSongs: (songs: Song[]) => {
-    set({ currentSongs: songs });
+  setQueues: (songs: Song[]) => {
+    set({ queues: songs });
   },
   setActiveSong: (song: Song) => {
     set({ activeSong: song });

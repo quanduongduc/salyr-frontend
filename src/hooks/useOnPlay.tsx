@@ -20,7 +20,7 @@ const useOnPlay = (songs: Song[]) => {
     player.active();
     player.setPlayingState(true);
     player.setActiveSong(song);
-    player.setCurrentSongs(songs);
+    player.setQueues(songs);
   };
 
   return onPlay;
