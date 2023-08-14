@@ -37,7 +37,7 @@ const MusicPlayer: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 sm:px-12 px-8 py-4 w-full flex items-center justify-between overflow-y-auto">
+    <div className="fixed bottom-0 left-0 sm:px-12 px-8 py-4 w-full flex items-center justify-between overflow-y-auto bg-black">
       <SongInfo song={activeSong} />
       <div className="flex flex-col items-center justify-center">
         <Controls

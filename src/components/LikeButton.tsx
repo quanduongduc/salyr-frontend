@@ -8,6 +8,10 @@ import { toast } from "react-hot-toast";
 
 import { useUser } from "@/hooks/useUser";
 import useAuthModal from "@/hooks/useAuthModal";
+import { GlobalData } from "@/pages/layout/Layout";
+import { useOutletContext } from "react-router-dom";
+import { API_URL, postData, resolveResponseError } from "@/utils/helpers";
+import { Song } from "@/types";
 
 interface LikeButtonProps {
   songId: string;
@@ -16,10 +20,8 @@ interface LikeButtonProps {
 const LikeButton: React.FC<LikeButtonProps> = ({
   songId
 }) => {
-  // const router = useRouter();
-  // const {
-    // supabaseClient
-  // } = useSessionContext();
+  const globalData = useOutletContext<GlobalData>()
+  const liked_songs = globalData?.liked_songs || []
   const authModal = useAuthModal();
   const { user } = useUser();
 
@@ -30,23 +32,9 @@ const LikeButton: React.FC<LikeButtonProps> = ({
       return;
     }
   
-    const fetchData = async () => {
-      // const { data, error } = await supabaseClient
-    //     .from('liked_songs')
-    //     .select('*')
-    //     .eq('user_id', user.id)
-    //     .eq('song_id', songId)
-    //     .single();
-
-    //   if (!error && data) {
-    //     setIsLiked(true);
-    //   }
-    }
-
-    fetchData();
-  }, [songId, 
-    // supabaseClient,
-     user?.id]);
+    const isLiked = liked_songs.some(song => song.id === parseInt(songId));
+    setIsLiked(isLiked)
+  }, [songId, user?.id]);
 
   const Icon = isLiked ? AiFillHeart : AiOutlineHeart;
 
@@ -55,35 +43,27 @@ const LikeButton: React.FC<LikeButtonProps> = ({
       return authModal.onOpen();
     }
 
-    // // if (isLiked) {
-    // //   const { error } = await supabaseClient
-    // //     .from('liked_songs')
-    // //     .delete()
-    // //     .eq('user_id', user.id)
-    // //     .eq('song_id', songId)
-
-    //   if (error) {
-    //     toast.error(error.message);
-    //   } else {
-    //     setIsLiked(false);
-    //   }
-    // } else {
-    //   const { error } = await supabaseClient
-    //     .from('liked_songs')
-    //     .insert({
-    //       song_id: songId,
-    //       user_id: user.id
-    //     });
-
-    //   if (error) {
-    //     toast.error(error.message);
-    //   } else {
-    //     setIsLiked(true);
-    //     toast.success('Success');
-    //   }
-    // }
-
-    // router.refresh();
+    if (isLiked) {
+      try {
+        const response = await postData({
+          url: `${API_URL}users/remove-favorites/${songId}`
+        })
+        setIsLiked(false);
+        toast.success(response.message);
+      } catch (error) {
+          resolveResponseError(error)
+      }
+    } else {
+      try {
+        const response = await postData({
+          url: `${API_URL}users/favorites/${songId}`
+        })
+        setIsLiked(true);
+        toast.success(response.message);
+      } catch (error) {
+          resolveResponseError(error)
+      }
+    }
   }
 
   return (

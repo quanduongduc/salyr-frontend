@@ -1,26 +1,13 @@
-// import Image from "next/image";
-
-// import getLikedSongs from "@/actions/getLikedSongs";
 import Header from "@/components/Header";
 
 import LikedContent from "./LikedContent";
-import { Song } from "@/types";
+import { useOutletContext } from "react-router-dom";
+import { GlobalData } from "../layout/Layout";
 
 export const revalidate = 0;
 
 const Liked = () => {
-  const songs: Song[] = [
-    {
-      id: 123,
-      title: "Hello",
-      url: "./song.mp3",
-      theme_url: "./images/liked.png",
-      release_date: new Date(),
-      genre: "Pop",
-      duration: 222,
-    }
-  ]; //await getLikedSongs();
-
+  const { liked_songs } = useOutletContext<GlobalData>();
   return (
     <div
       className="
@@ -67,7 +54,7 @@ const Liked = () => {
           </div>
         </div>
       </Header>
-      <LikedContent songs={songs} />
+      <LikedContent songs={liked_songs} />
     </div>
   );
 };

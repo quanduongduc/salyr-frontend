@@ -1,15 +1,40 @@
-// import getSongsByTitle from "@/actions/getSongsByTitle";
 import SearchInput from "@/components/SearchInput";
 import Header from "@/components/Header";
 
 import { Song } from "@/types";
-import { song1, song2 } from "@/utils/mockData";
 import { useParams } from "react-router-dom";
 import ArtistContent from "./ArtistContent";
+import { useEffect, useState } from "react";
+import { API_URL, getData } from "@/utils/helpers";
 
 const ArtistPage = () => {
-  const id = useParams();
-  const songs: Song[] = [song1, song2]; //await getSongsByTitle(searchParams.title);
+  const { id } = useParams<{
+    id: string;
+  }>()
+
+  const [songs, setSongs] = useState<Song[]>([])
+
+  async function fetchAlbumById(id: string | undefined) {
+    try {
+      if(id) {
+        const response = await getData(`${API_URL}artists/${id}`)
+        const songs = response.songs
+        return songs
+      }
+      else {
+        return []
+      }
+    } catch (error) {
+      console.log(error)
+      return []
+    }
+  }
+  console.log(songs)
+
+  useEffect(() => {
+    fetchAlbumById(id).then((data) => setSongs(data))
+  }, [id])
+  
   return (
     <div
       className="
