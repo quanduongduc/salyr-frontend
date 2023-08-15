@@ -80,10 +80,17 @@ const ContentItem: React.FC<ContentItemProps> = ({ data, onClick }) => {
             truncate
           "
         >
-          By{" "}
-          {resolveAttributes(data)
+          {
+            resolveAttributes(data)
+            .artists.length
+            ?
+            "By " + resolveAttributes(data)
             .artists.map((artist: Artist) => artist.name)
-            .join(",")}
+            .join(",")
+            :
+            "Artist"
+          }
+          {}
         </p>
       </div>
       <div

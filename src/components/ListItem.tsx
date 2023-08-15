@@ -6,6 +6,7 @@ import { FaPlay } from "react-icons/fa";
 
 import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
+import { useNavigate } from "react-router-dom";
 
 interface ListItemProps {
   image: string;
@@ -17,12 +18,13 @@ const ListItem: React.FC<ListItemProps> = ({ image, name, href }) => {
   // const router = useRouter();
   const authModal = useAuthModal();
   const { user } = useUser();
+  const navigate = useNavigate();
 
   const onClick = () => {
-    // if (!user) {
-    //   return authModal.onOpen();
-    // }
-    // router.push(href);
+    if (!user) {
+      return authModal.onOpen();
+    }
+    navigate(href)
   };
 
   return (

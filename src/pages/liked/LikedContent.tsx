@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { Song } from "@/types";
 import { useUser } from "@/hooks/useUser";
 import MediaItem from "@/components/MediaItem";
-import LikeButton from "@/components/LikeButton";
 import useOnPlay from "@/hooks/useOnPlay";
 import { useNavigate } from "react-router-dom";
 

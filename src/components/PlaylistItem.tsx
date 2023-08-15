@@ -47,6 +47,10 @@ const navigate = useNavigate();
           className="object-cover"
         />
       </div>
+      <div className="flex flex-col gap-y-1 overflow-hidden">
+        <p className="text-white truncate">{data.title[0].toUpperCase() + data.title.slice(1, data.title.length)}</p>
+        <p className="text-neutral-400 text-sm truncate">Playlist</p>
+      </div>
     </div>
   );
 };

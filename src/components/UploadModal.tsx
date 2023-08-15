@@ -69,8 +69,8 @@ const UploadModal = () => {
 
   return (
     <Modal
-      title="Add a song"
-      description="Upload an mp3 file"
+      title="Create your personal playlist"
+      description="Give it all your heart &#x1F49A;"
       isOpen={uploadModal.isOpen}
       onChange={onChange}
     >

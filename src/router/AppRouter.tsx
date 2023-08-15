@@ -7,6 +7,7 @@ import Home from "@/pages/mainPage/page";
 import Account from "@/pages/account/page";
 import AlbumPage from "@/pages/album/page";
 import ArtistPage from "@/pages/artist/page";
+import PlaylistPage from "@/pages/playlist/page";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/album/:id",
         element: <AlbumPage />,
+      },
+      {
+        path: "/playlist/:id",
+        element: <PlaylistPage />,
       },
       {
         path: "/artist/:id",

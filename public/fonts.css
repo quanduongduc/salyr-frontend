@@ -1,0 +1,80 @@
+/* index.css */
+
+/* Import CircularStd Fonts */
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('./fonts/CircularStd-Black.otf') format('opentype');
+  font-weight: 900; /* 'Black' font weight */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('./fonts/CircularStd-BlackItalic.otf') format('opentype');
+  font-weight: 900; /* 'Black' font weight */
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('./fonts/CircularStd-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('./fonts/CircularStd-BoldItalic.otf') format('opentype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('./fonts/CircularStd-Book.otf') format('opentype');
+  font-weight: normal; /* 'Book' font weight */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('./fonts/CircularStd-BookItalic.otf') format('opentype');
+  font-weight: normal; /* 'Book' font weight */
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('./fonts/CircularStd-Light Italic.otf') format('opentype');
+  font-weight: lighter; /* Adjust font weight as needed */
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('./fonts/CircularStd-Light.otf') format('opentype');
+  font-weight: lighter; /* Adjust font weight as needed */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('./fonts/CircularStd-Medium.otf') format('opentype');
+  font-weight: 500; /* 'Medium' font weight */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CircularStd';
+  src: url('./fonts/CircularStd-MediumItalic.otf') format('opentype');
+  font-weight: 500; /* 'Medium' font weight */
+  font-style: italic;
+}
+
+/* Set Global Font Family */
+body {
+  font-family: 'CircularStd', sans-serif;
+}
+
+/* Rest of your CSS code */

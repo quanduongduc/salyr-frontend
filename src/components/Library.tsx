@@ -3,12 +3,11 @@
 import { TbPlaylist } from "react-icons/tb";
 import { AiOutlinePlus } from "react-icons/ai";
 
-import { Playlist, Song } from "@/types";
+import { Playlist } from "@/types";
 import useUploadModal from "@/hooks/useUploadModal";
 import { useUser } from "@/hooks/useUser";
 import useAuthModal from "@/hooks/useAuthModal";
 
-import MediaItem from "./MediaItem";
 import { useNavigate } from "react-router-dom";
 import PlaylistItem from "./PlaylistItem";
 
