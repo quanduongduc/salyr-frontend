@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import {
-  API_URL,
   getData,
   postData,
   resolveResponseError,
-} from "../utils/helpers";
+} from "@/utils/helpers";
 import { useNavigate } from "react-router-dom";
+import { AUTH_ENDPOINT } from "@/utils/constants";
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ export const useAuth = () => {
     };
     try {
       const response = await postData({
-        url: `${API_URL}auth/login`,
+        url: `${AUTH_ENDPOINT}/login`,
         data: credentials,
       });
 
@@ -55,7 +55,7 @@ export const useAuth = () => {
 
   const refreshTokenFunc = async () => {
     try {
-      const response = await getData(`${API_URL}auth/refresh-token`);
+      const response = await getData(`${AUTH_ENDPOINT}/refresh-token`);
 
       const { access_token, refresh_token } = response;
       setAccessToken(access_token);
@@ -80,7 +80,7 @@ export const useAuth = () => {
     };
     try {
       const response = await postData({
-        url: `${API_URL}auth/register`,
+        url: `${AUTH_ENDPOINT}/register`,
         data: userInfo,
       });
 

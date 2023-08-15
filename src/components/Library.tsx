@@ -3,24 +3,23 @@
 import { TbPlaylist } from "react-icons/tb";
 import { AiOutlinePlus } from "react-icons/ai";
 
-import { Song } from "@/types";
+import { Playlist, Song } from "@/types";
 import useUploadModal from "@/hooks/useUploadModal";
 import { useUser } from "@/hooks/useUser";
 import useAuthModal from "@/hooks/useAuthModal";
-import useOnPlay from "@/hooks/useOnPlay";
 
 import MediaItem from "./MediaItem";
+import { useNavigate } from "react-router-dom";
+import PlaylistItem from "./PlaylistItem";
 
 interface LibraryProps {
-  songs: Song[];
+  playlists: Playlist[];
 }
 
-const Library: React.FC<LibraryProps> = ({ songs }) => {
+const Library: React.FC<LibraryProps> = ({ playlists }) => {
   const { user } = useUser();
   const uploadModal = useUploadModal();
   const authModal = useAuthModal();
-
-  const onPlay = useOnPlay(songs);
 
   const onClick = () => {
     if (!user) {
@@ -29,6 +28,8 @@ const Library: React.FC<LibraryProps> = ({ songs }) => {
 
     return uploadModal.onOpen();
   };
+
+  const navigate = useNavigate()
 
   return (
     <div className="flex flex-col">
@@ -49,11 +50,11 @@ const Library: React.FC<LibraryProps> = ({ songs }) => {
         />
       </div>
       <div className="flex flex-col gap-y-2 mt-4 px-3">
-        {songs.map((song) => (
-          <MediaItem
-            onClick={(song: Song) => onPlay(song)}
-            key={song.id}
-            data={song}
+        {playlists.map((playlist) => (
+          <PlaylistItem
+            onClick={(playlist: Playlist) => navigate(`/playlist/${playlist.id}`)}
+            key={playlist.id}
+            data={playlist}
           />
         ))}
       </div>

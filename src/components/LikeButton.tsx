@@ -10,8 +10,8 @@ import { useUser } from "@/hooks/useUser";
 import useAuthModal from "@/hooks/useAuthModal";
 import { GlobalData } from "@/pages/layout/Layout";
 import { useOutletContext } from "react-router-dom";
-import { API_URL, postData, resolveResponseError } from "@/utils/helpers";
-import { Song } from "@/types";
+import { postData, resolveResponseError } from "@/utils/helpers";
+import { USER_ENDPOINT } from "@/utils/constants";
 
 interface LikeButtonProps {
   songId: string;
@@ -46,7 +46,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
     if (isLiked) {
       try {
         const response = await postData({
-          url: `${API_URL}users/remove-favorites/${songId}`
+          url: `${USER_ENDPOINT}/remove-favorites/${songId}`
         })
         setIsLiked(false);
         toast.success(response.message);
@@ -56,7 +56,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
     } else {
       try {
         const response = await postData({
-          url: `${API_URL}users/favorites/${songId}`
+          url: `${USER_ENDPOINT}/favorites/${songId}`
         })
         setIsLiked(true);
         toast.success(response.message);

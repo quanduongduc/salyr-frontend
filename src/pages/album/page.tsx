@@ -4,7 +4,8 @@ import SearchContent from "./AlbumContent";
 import { Song } from "@/types";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { API_URL, getData } from "@/utils/helpers";
+import { getData } from "@/utils/helpers";
+import { ALBUM_ENDPOINT } from "@/utils/constants";
 
 
 const AlbumPage = () => {
@@ -17,7 +18,7 @@ const AlbumPage = () => {
   async function fetchAlbumById(id: string | undefined) {
     try {
       if(id) {
-        const response = await getData(`${API_URL}albums/${id}`)
+        const response = await getData(`${ALBUM_ENDPOINT}/${id}`)
         const songs = response.songs
         return songs
       }

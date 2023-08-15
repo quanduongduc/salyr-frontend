@@ -1,15 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, createContext, useContext } from "react";
-// import {
-//   useUser as useSupaUser,
-//   useSessionContext,
-//   User
-// } from '@supabase/auth-helpers-react';
-
 import { User } from "@/types";
-import { API_URL, getData } from "../utils/helpers";
+import { getData } from "@/utils/helpers";
 import { useAuth } from "./useAuth";
-import toast from "react-hot-toast";
+import { USER_ENDPOINT } from "@/utils/constants";
 
 type UserContextType = {
   user: User | null;
@@ -32,7 +25,7 @@ export const MyUserContextProvider = (props: Props) => {
 
   const getUserDetails = async () => {
     try {
-      const response = await getData(`${API_URL}users/me`);
+      const response = await getData(`${USER_ENDPOINT}/me`);
       return response;
     } catch (error: any) {
       if (error.response && error.response.status === 403) {

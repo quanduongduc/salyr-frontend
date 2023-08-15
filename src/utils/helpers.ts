@@ -1,9 +1,9 @@
 import axios, { AxiosError } from 'axios';
 import { toast } from 'react-hot-toast';
 
-const getURL = () => {
+export const getURL = () => {
     let url =
-        process.env.API_URL ? process.env.API_URL : "http://localhost:5000";
+        process.env.API_URL ? process.env.API_URL : "http://localhost:8000";
     // Make sure to include `https://` when not localhost.
     url = url.includes('http') ? url : `https://${url}`;
     // Make sure to including trailing `/`.
@@ -76,4 +76,3 @@ export const resolveResponseError = (error: any) => {
 
 }
 
-export const API_URL = getURL()
