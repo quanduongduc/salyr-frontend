@@ -22,6 +22,7 @@ const LikedContent: React.FC<LikedContentProps> = ({ songs }) => {
     if (!isLoading && !user) {
       navigate("/");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, user]);
 
   if (songs.length === 0) {

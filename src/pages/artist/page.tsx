@@ -1,4 +1,3 @@
-import SearchInput from "@/components/SearchInput";
 import Header from "@/components/Header";
 import { VscVerifiedFilled } from "react-icons/vsc";
 import { Artist } from "@/types";
@@ -11,28 +10,27 @@ import { ARTIST_ENDPOINT } from "@/utils/constants";
 const ArtistPage = () => {
   const { id } = useParams<{
     id: string;
-  }>()
+  }>();
 
-  const [artist, setArtist] = useState<Artist | undefined>()
+  const [artist, setArtist] = useState<Artist | undefined>();
 
   async function fetchAlbumById(id: string | undefined) {
     try {
       if (id) {
-        const response = await getData(`${ARTIST_ENDPOINT}/${id}`)
-        return response
-      }
-      else {
-        return undefined
+        const response = await getData(`${ARTIST_ENDPOINT}/${id}`);
+        return response;
+      } else {
+        return undefined;
       }
     } catch (error) {
-      resolveResponseError(error)
-      return undefined
+      resolveResponseError(error);
+      return undefined;
     }
   }
-  
+
   useEffect(() => {
-    fetchAlbumById(id).then((data) => setArtist(data))
-  }, [id])
+    fetchAlbumById(id).then((data) => setArtist(data));
+  }, [id]);
 
   return (
     <div
@@ -48,10 +46,10 @@ const ArtistPage = () => {
       <Header className="from-bg-neutral-900">
         <div className="mb-2 flex flex-col gap-y-6">
           <div className="flex items-center gap-x-2">
-            <VscVerifiedFilled className=""/>
+            <VscVerifiedFilled className="" />
             <p className="text-white text-sm">Verified Artist</p>
           </div>
-            <h1 className="text-white text-3xl font-semibold">{artist?.name}</h1>
+          <h1 className="text-white text-3xl font-semibold">{artist?.name}</h1>
           {/* <SearchInput /> */}
         </div>
       </Header>

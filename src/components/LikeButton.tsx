@@ -34,6 +34,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   
     const isLiked = liked_songs.some(song => song.id === parseInt(songId));
     setIsLiked(isLiked)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [songId, user?.id]);
 
   const Icon = isLiked ? AiFillHeart : AiOutlineHeart;

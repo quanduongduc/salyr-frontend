@@ -19,11 +19,11 @@ const AuthModal = () => {
   };
 
   useEffect(() => {
-    console.log(isOpen);
     if (user.authenticated) {
       refreshPage();
       onClose();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onClose]);
 
   const onChange = (open: boolean) => {

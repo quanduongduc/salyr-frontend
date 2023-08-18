@@ -24,7 +24,7 @@ export const useAuth = () => {
     }
   }, [accessToken]);
 
-  useEffect(() => {
+useEffect(() => {
     if (refreshToken) {
       localStorage.setItem("refreshToken", refreshToken);
     } else {
