@@ -6,21 +6,10 @@ import PageContent from "./PageContent";
 import { Link, useOutletContext } from "react-router-dom";
 import { GlobalData } from "../layout/Layout";
 
-
 const Home = () => {
   const globalData = useOutletContext<GlobalData>();
   return (
-    <div
-      className="custom-scrollbar
-        bg-neutral-900 
-        rounded-lg 
-        max-h-screen
-        h-full 
-        w-full 
-        overflow-hidden 
-        overflow-y-scroll
-      "
-    >
+    <>
       <Header>
         <div className="mb-2">
           <h1
@@ -54,10 +43,14 @@ const Home = () => {
         </div>
       </Header>
       <div className="grid gap-8 mt-2 mb-7 px-6">
-        <PageContent songs={globalData.songs} albums={globalData.albums} artists={globalData.artists} />
+        <PageContent
+          songs={globalData.songs}
+          albums={globalData.albums}
+          artists={globalData.artists}
+        />
       </div>
-    </div>
+    </>
   );
-}
+};
 
-export default Home
+export default Home;

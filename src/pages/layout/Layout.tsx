@@ -13,6 +13,7 @@ import {
   USER_ENDPOINT,
   PLAYLIST_ENDPOINT,
 } from "@/utils/constants";
+import { twMerge } from "tailwind-merge";
 
 export interface GlobalData {
   songs: Song[];
@@ -84,12 +85,33 @@ export default function Layout() {
     );
   }, []);
   return (
-    <>
+    <div
+      className={twMerge(
+        `
+        flex 
+        h-full
+        `
+      )}
+    >
       {/* <ModalProvider products={products} /> */}
-      <Sidebar playlists={globalData.playlists}>
-        <Outlet context={globalData}></Outlet>
-      </Sidebar>
+      <Sidebar playlists={globalData.playlists} />
+      <main className="h-screen flex-1 overflow-y-auto py-2">
+        <div
+          className="
+        bg-neutral-900 
+        rounded-lg 
+        max-h-screen
+        h-full 
+        w-full 
+        overflow-hidden 
+        overflow-y-scroll
+        custom-scrollbar
+      "
+        >
+          <Outlet context={globalData}></Outlet>
+        </div>
+      </main>
       {player.isActive && <MusicPlayer />}
-    </>
+    </div>
   );
 }

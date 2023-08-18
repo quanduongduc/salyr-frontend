@@ -15,13 +15,10 @@ import { useMemo } from "react";
 import { nanoid } from "nanoid";
 
 interface SidebarProps {
-  children: React.ReactNode;
   playlists: Playlist[];
 }
 
-const Sidebar = ({ children, playlists }: SidebarProps) => {
-  const player = usePlayer();
-
+const Sidebar = ({ playlists }: SidebarProps) => {
   const routes = useMemo(
     () => [
       {
@@ -44,16 +41,7 @@ const Sidebar = ({ children, playlists }: SidebarProps) => {
 
   return (
     <div
-      className={twMerge(
-        `
-        flex 
-        h-full
-        `,
-        player.activeSong.id && "h-[calc(100%-80px)]"
-      )}
-    >
-      <div
-        className="
+      className="
           hidden 
           md:flex 
           flex-col 
@@ -63,21 +51,17 @@ const Sidebar = ({ children, playlists }: SidebarProps) => {
           w-[300px] 
           p-2
         "
-      >
-        <Box>
-          <div className="flex flex-col gap-y-4 px-5 py-4">
-            {routes.map((item) => (
-              <SidebarItem key={nanoid()} {...item} />
-            ))}
-          </div>
-        </Box>
-        <Box className="overflow-y-auto h-full">
-          <Library playlists={playlists} />
-        </Box>
-      </div>
-      <main className="min-h-screen flex-1 overflow-y-auto py-2">
-        {children}
-      </main>
+    >
+      <Box>
+        <div className="flex flex-col gap-y-4 px-5 py-4">
+          {routes.map((item) => (
+            <SidebarItem key={nanoid()} {...item} />
+          ))}
+        </div>
+      </Box>
+      <Box className="overflow-y-auto h-full">
+        <Library playlists={playlists} />
+      </Box>
     </div>
   );
 };

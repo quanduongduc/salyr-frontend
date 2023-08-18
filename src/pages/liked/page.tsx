@@ -7,16 +7,7 @@ import { GlobalData } from "../layout/Layout";
 const Liked = () => {
   const { liked_songs } = useOutletContext<GlobalData>();
   return (
-    <div
-      className="
-        bg-neutral-900 
-        rounded-lg 
-        h-full 
-        w-full 
-        overflow-hidden 
-        overflow-y-auto
-      "
-    >
+    <>
       <Header>
         <div className="mt-20">
           <div
@@ -53,7 +44,7 @@ const Liked = () => {
         </div>
       </Header>
       <LikedContent songs={liked_songs} />
-    </div>
+    </>
   );
 };
 
