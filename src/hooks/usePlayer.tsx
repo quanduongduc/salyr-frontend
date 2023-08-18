@@ -10,21 +10,25 @@ interface PlayerState {
   shuffle: boolean;
 }
 
-function handleNextSongIndex(prevState: PlayerStore): PlayerStore | Partial<PlayerStore>  {
+function handleNextSongIndex(
+  prevState: PlayerStore
+): PlayerStore | Partial<PlayerStore> {
   const { shuffle, currentIndex, queues } = prevState;
-  let newIndex= (currentIndex + 1) % queues.length;
+  let newIndex = (currentIndex + 1) % queues.length;
   if (shuffle) {
-    newIndex =  Math.random() * queues.length;
+    newIndex = Math.random() * queues.length;
   }
 
-  const newActiveSong = prevState.queues[newIndex]
+  const newActiveSong = prevState.queues[newIndex];
   return {
     currentIndex: newIndex,
     activeSong: newActiveSong,
-  }
+  };
 }
 
-function handlePrevSongIndex(prevState: PlayerStore): PlayerStore | Partial<PlayerStore> {
+function handlePrevSongIndex(
+  prevState: PlayerStore
+): PlayerStore | Partial<PlayerStore> {
   const { currentIndex, shuffle, queues } = prevState;
   let newIndex;
   if (currentIndex === 0) {
@@ -34,11 +38,11 @@ function handlePrevSongIndex(prevState: PlayerStore): PlayerStore | Partial<Play
   } else {
     newIndex = currentIndex - 1;
   }
-  const newActiveSong = prevState.queues[newIndex]
+  const newActiveSong = prevState.queues[newIndex];
   return {
     currentIndex: newIndex,
     activeSong: newActiveSong,
-  }
+  };
 }
 
 const initialState = {
@@ -73,7 +77,7 @@ const usePlayer = create<PlayerStore>((set) => ({
   setPlayingState: (playing_state: boolean) =>
     set({ isPlaying: playing_state }),
   nextSongIndex: () => {
-    set((prevState: PlayerStore)=> handleNextSongIndex(prevState));
+    set((prevState: PlayerStore) => handleNextSongIndex(prevState));
   },
   prevSongIndex: () => {
     set((prevState: PlayerStore) => handlePrevSongIndex(prevState));

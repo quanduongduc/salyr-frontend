@@ -8,12 +8,12 @@ import SongInfo from "./SongInfo";
 
 const MusicPlayer: React.FC = () => {
   const player = usePlayer();
-  const { queues: currentSongs, currentIndex, isPlaying, activeSong } = player;
+  const { queues: currentSongs, isPlaying, activeSong } = player;
 
   const [duration, setDuration] = useState<number>(0);
   const [seekTime, setSeekTime] = useState<number>(0);
   const [appTime, setAppTime] = useState<number>(0);
-  const [volume, setVolume] = useState<number>(0.3);
+  const [volume, setVolume] = useState<number>(0.7);
   const [repeat, setRepeat] = useState<boolean>(false);
   const [shuffle, setShuffle] = useState<boolean>(false);
 
@@ -37,7 +37,7 @@ const MusicPlayer: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 sm:px-12 px-8 py-4 w-full flex items-center justify-between overflow-y-auto bg-black">
+    <div className="fixed bottom-0 left-0 sm:px-12 px-8 py-4 w-full flex items-center justify-between overflow-y-auto bg-black animate-fade-up">
       <SongInfo song={activeSong} />
       <div className="flex flex-col items-center justify-center">
         <Controls

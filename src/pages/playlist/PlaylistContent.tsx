@@ -4,6 +4,7 @@ import { Song } from "@/types"; // Make sure to import the correct Playlist type
 import MediaItem from "@/components/MediaItem";
 import LikeButton from "@/components/LikeButton";
 import useOnPlay from "@/hooks/useOnPlay";
+import { nanoid } from "nanoid";
 
 interface PlaylistContentProps {
     songs: Song[]; // Change the prop to a single playlist object
@@ -31,7 +32,7 @@ const PlaylistContent: React.FC<PlaylistContentProps> = ({ songs }) => {
     return (
         <div className="flex flex-col gap-y-2 w-full px-6">
             {songs.map((song: Song) => (
-                <div key={song.id} className="flex items-center gap-x-4 w-full">
+                <div key={nanoid()} className="flex items-center gap-x-4 w-full">
                     <div className="flex-1">
                         <MediaItem onClick={() => onPlay(song)} data={song} />
                     </div>

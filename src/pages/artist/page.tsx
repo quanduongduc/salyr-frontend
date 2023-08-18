@@ -52,7 +52,7 @@ const ArtistPage = () => {
             <p className="text-white text-sm">Verified Artist</p>
           </div>
             <h1 className="text-white text-3xl font-semibold">{artist?.name}</h1>
-          <SearchInput />
+          {/* <SearchInput /> */}
         </div>
       </Header>
       <ArtistContent songs={artist?.songs || []} />

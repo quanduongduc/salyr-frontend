@@ -10,6 +10,8 @@ import useAuthModal from "@/hooks/useAuthModal";
 
 import { useNavigate } from "react-router-dom";
 import PlaylistItem from "./PlaylistItem";
+import SkeletonSideItem from "./SkeletonSideItem";
+import { nanoid } from "nanoid";
 
 interface LibraryProps {
   playlists: Playlist[];
@@ -28,7 +30,7 @@ const Library: React.FC<LibraryProps> = ({ playlists }) => {
     return uploadModal.onOpen();
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col">
@@ -49,13 +51,19 @@ const Library: React.FC<LibraryProps> = ({ playlists }) => {
         />
       </div>
       <div className="flex flex-col gap-y-2 mt-4 px-3">
-        {playlists.map((playlist) => (
-          <PlaylistItem
-            onClick={(playlist: Playlist) => navigate(`/playlist/${playlist.id}`)}
-            key={playlist.id}
-            data={playlist}
-          />
-        ))}
+        {playlists.length
+          ? playlists.map((playlist) => (
+              <PlaylistItem
+                onClick={(playlist: Playlist) =>
+                  navigate(`/playlist/${playlist.id}`)
+                }
+                key={nanoid()}
+                data={playlist}
+              />
+            ))
+          : Array.from(Array(10), (_, i) => (
+              <SkeletonSideItem key={nanoid()} />
+            ))}
       </div>
     </div>
   );

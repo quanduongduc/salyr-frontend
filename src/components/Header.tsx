@@ -39,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
 
   return (
     <>
-      <div className="sticky left-0 top-0 w-full mb-4 flex items-center justify-between z-50 bg-neutral-900 px-3">
+      <div className="sticky left-0 top-0 w-full mb-4 flex items-center justify-between z-50 bg-neutral-900 px-6 py-4">
         <div className="hidden md:flex gap-x-2 items-center">
           <button
             onClick={() => navigate(-1)}

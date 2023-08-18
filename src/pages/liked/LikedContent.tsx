@@ -6,15 +6,13 @@ import { useUser } from "@/hooks/useUser";
 import MediaItem from "@/components/MediaItem";
 import useOnPlay from "@/hooks/useOnPlay";
 import { useNavigate } from "react-router-dom";
+import { nanoid } from "nanoid";
 
 interface LikedContentProps {
   songs: Song[];
-};
+}
 
-const LikedContent: React.FC<LikedContentProps> = ({
-  songs
-}) => {
-  // const router = useRouter();
+const LikedContent: React.FC<LikedContentProps> = ({ songs }) => {
   const { isLoading, user } = useUser();
 
   const onPlay = useOnPlay(songs);
@@ -22,13 +20,13 @@ const LikedContent: React.FC<LikedContentProps> = ({
 
   useEffect(() => {
     if (!isLoading && !user) {
-        navigate('/')
+      navigate("/");
     }
   }, [isLoading, user]);
 
   if (songs.length === 0) {
     return (
-      <div 
+      <div
         className="
           flex 
           flex-col 
@@ -39,15 +37,12 @@ const LikedContent: React.FC<LikedContentProps> = ({
       >
         No liked songs.
       </div>
-    )
+    );
   }
-  return ( 
+  return (
     <div className="flex flex-col gap-y-2 w-full p-6">
       {songs.map((song: any) => (
-        <div 
-          key={song.id} 
-          className="flex items-center gap-x-4 w-full"
-        >
+        <div key={nanoid()} className="flex items-center gap-x-4 w-full">
           <div className="flex-1">
             <MediaItem onClick={(id) => onPlay(id)} data={song} />
           </div>
@@ -55,6 +50,6 @@ const LikedContent: React.FC<LikedContentProps> = ({
       ))}
     </div>
   );
-}
- 
+};
+
 export default LikedContent;

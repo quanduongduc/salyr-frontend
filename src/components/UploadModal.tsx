@@ -12,17 +12,14 @@ import { useUser } from "@/hooks/useUser";
 import Modal from './Modal';
 import Input from './Input';
 import Button from './Button';
-import { title } from "process";
 import { postData } from "@/utils/helpers";
-import { ALBUM_ENDPOINT, PLAYLIST_ENDPOINT } from "@/utils/constants";
+import { PLAYLIST_ENDPOINT } from "@/utils/constants";
 
 const UploadModal = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const uploadModal = useUploadModal();
-  // const supabaseClient = useSupabaseClient();
   const { user } = useUser();
-  // const router = useRouter();
 
   const {
     register,
@@ -53,13 +50,10 @@ const UploadModal = () => {
       const response = await postData({url :`${PLAYLIST_ENDPOINT}`, data : {title}})
       if (response) {
         toast.success('create album success')
+        uploadModal.onClose()
         return;
       }        
-      // router.refresh();
       setIsLoading(false);
-      toast.success('Song created!');
-      reset();
-      uploadModal.onClose();
     } catch (error) {
       toast.error('Something went wrong');
     } finally {

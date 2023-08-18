@@ -1,18 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
-
+import { useEffect} from "react";
 import { useUser } from "@/hooks/useUser";
 import Button from "@/components/Button";
-import { postData } from "@/utils/helpers";
 import { useNavigate } from "react-router-dom";
 
 const AccountContent = () => {
   const navigate = useNavigate();
   const { isLoading, user } = useUser();
-
-  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!isLoading && !user) {

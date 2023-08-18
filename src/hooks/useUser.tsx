@@ -3,6 +3,7 @@ import { User } from "@/types";
 import { getData } from "@/utils/helpers";
 import { useAuth } from "./useAuth";
 import { USER_ENDPOINT } from "@/utils/constants";
+import usePlayer from "./usePlayer";
 
 type UserContextType = {
   user: User | null;
@@ -22,6 +23,7 @@ export const MyUserContextProvider = (props: Props) => {
   const [isLoadingData, setIsloadingData] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const auth = useAuth();
+  const player = usePlayer();
 
   const getUserDetails = async () => {
     try {
@@ -42,9 +44,14 @@ export const MyUserContextProvider = (props: Props) => {
       setIsloadingData(true);
       Promise.resolve(getUserDetails())
         .then((results) => {
+          const user = results as User;
           setAuthenticated(true);
-          setUserDetails(results as User);
+          setUserDetails(user);
           setIsloadingData(false);
+          if (user.last_play) {
+            player.setActiveSong(user.last_play);
+            player.active();
+          }
         })
         .catch((error) => {
           console.error(error); // Handle any errors from the async function
@@ -59,7 +66,7 @@ export const MyUserContextProvider = (props: Props) => {
 
   const value = {
     user: userDetails,
-    isLoading: null || isLoadingData,
+    isLoading: isLoadingData,
     authenticated: authenticated,
   };
 

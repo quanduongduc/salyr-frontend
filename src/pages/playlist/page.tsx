@@ -53,7 +53,7 @@ const PlaylistPage = () => {
           <p className="text-white text-sm">Personal PlayList</p>
           </div>
           <h1 className="text-white text-3xl font-semibold">PlayList</h1>
-          <SearchInput />
+          {/* <SearchInput setSearched={setSearchedSongs} endpoint={SONG_ENDPOINT}/> */}
         </div>
       </Header>
       <PlaylistContent songs={songs} />

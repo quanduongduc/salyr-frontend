@@ -1,40 +1,49 @@
 "use client";
 
 import qs from "query-string";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { useRouter } from "next/navigation";
 
 import useDebounce from "@/hooks/useDebounce";
 
 import Input from "./Input";
+import { getData, resolveResponseError } from "@/utils/helpers";
 
-const SearchInput = () => {
-  // const router = useRouter();
-  const [value, setValue] = useState<string>('');
+interface SearchInputProps {
+  setSearched : React.Dispatch<React.SetStateAction<any>>,
+  endpoint : string
+}
+
+const SearchInput : React.FC<SearchInputProps> = ({setSearched, endpoint}) => {
+  const [value, setValue] = useState<string>("");
   const debouncedValue = useDebounce<string>(value, 500);
 
+  const queryByTitle = async (endpoint: string) => {
+    try {
+      const queryUrl = qs.stringifyUrl({url : `${endpoint}/search`, query: {
+        title : debouncedValue
+      }})  
+      const data = await getData(queryUrl)
+      return data
+    } catch (error) {
+      resolveResponseError(error)
+    }
+  }
+
   useEffect(() => {
-    const query = {
-      title: debouncedValue,
-    };
+    if(debouncedValue) {
+      queryByTitle(endpoint).then((data) => setSearched(data || []))
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedValue]);
 
-    const url = qs.stringifyUrl({
-      url: '/search',
-      query
-    });
-
-    // router.push(url);
-  }, [debouncedValue, 
-    // router
-  ]);
-
-  return ( 
-    <Input 
+  return (
+    <Input
       placeholder="What do you want to listen to?"
       value={value}
       onChange={(e) => setValue(e.target.value)}
     />
   );
-}
- 
+};
+
 export default SearchInput;

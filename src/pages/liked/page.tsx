@@ -4,8 +4,6 @@ import LikedContent from "./LikedContent";
 import { useOutletContext } from "react-router-dom";
 import { GlobalData } from "../layout/Layout";
 
-export const revalidate = 0;
-
 const Liked = () => {
   const { liked_songs } = useOutletContext<GlobalData>();
   return (

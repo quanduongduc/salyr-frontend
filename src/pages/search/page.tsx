@@ -4,13 +4,12 @@ import Header from "@/components/Header";
 
 import SearchContent from "./SearchContent";
 import { Song } from "@/types";
-import { song1, song2 } from "@/utils/mockData";
-
-export const revalidate = 0;
+import { useState } from "react";
+import { SONG_ENDPOINT } from "@/utils/constants";
 
 const Search = () => {
-  const songs: Song[] = [song1, song2]; //await getSongsByTitle(searchParams.title);
-
+  const [searchedSongs, setSearchedSongs] = useState<Song[]>([]);
+  console.log(searchedSongs)
   return (
     <div
       className="
@@ -25,10 +24,10 @@ const Search = () => {
       <Header className="from-bg-neutral-900">
         <div className="mb-2 flex flex-col gap-y-6">
           <h1 className="text-white text-3xl font-semibold">Search</h1>
-          <SearchInput />
+          <SearchInput setSearched={setSearchedSongs} endpoint={SONG_ENDPOINT}/>
         </div>
       </Header>
-      <SearchContent songs={songs} />
+      <SearchContent songs={searchedSongs} />
     </div>
   );
 };

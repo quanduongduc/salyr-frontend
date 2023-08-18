@@ -1,7 +1,8 @@
 "use client";
-
 import { Album, Artist, Song } from "@/types";
 import HomeContentItem from "@/components/HomeContentItem";
+import ContentItemSkeleton from "@/components/ContentItemSkeleton";
+import { nanoid } from "nanoid";
 
 interface PageContentProps {
   songs: Song[];
@@ -14,9 +15,27 @@ const PageContent: React.FC<PageContentProps> = ({
   albums,
   artists,
 }) => {
-  if (songs.length === 0) {
-    return <div className="mt-4 text-neutral-400">No songs available.</div>;
-  }
+  const showSkeleton = () => {
+    return (
+      <div
+        className="
+      grid 
+      grid-cols-2 
+      sm:grid-cols-3 
+      md:grid-cols-3 
+      lg:grid-cols-4 
+      xl:grid-cols-5 
+      2xl:grid-cols-8 
+      gap-4 
+      mt-4
+    "
+      >
+        {Array.from(Array(10), (_, i) => (
+          <ContentItemSkeleton key={nanoid()} />
+        ))}
+      </div>
+    );
+  };
 
   return (
     <>
@@ -24,14 +43,22 @@ const PageContent: React.FC<PageContentProps> = ({
         <div className="flex justify-between items-center">
           <h1 className="text-white text-2xl font-semibold">Newest songs</h1>
         </div>
-        <HomeContentItem items={songs} />
+        {songs.length === 0 ? (
+          showSkeleton()
+        ) : (
+          <HomeContentItem items={songs} />
+        )}
       </div>
 
       <div>
         <div className="flex justify-between items-center">
           <h1 className="text-white text-2xl font-semibold">Hot Ablums</h1>
         </div>
-        <HomeContentItem items={albums} />
+        {albums.length === 0 ? (
+          showSkeleton()
+        ) : (
+          <HomeContentItem items={albums} />
+        )}
       </div>
       <div>
         <div className="flex justify-between items-center">
@@ -39,7 +66,11 @@ const PageContent: React.FC<PageContentProps> = ({
             Best Artists of The Year
           </h1>
         </div>
-        <HomeContentItem items={artists} />
+        {artists.length === 0 ? (
+          showSkeleton()
+        ) : (
+          <HomeContentItem items={artists} />
+        )}
       </div>
     </>
   );

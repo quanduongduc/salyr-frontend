@@ -12,6 +12,7 @@ import SidebarItem from "./SidebarItem";
 import Box from "./Box";
 import Library from "./Library";
 import { useMemo } from "react";
+import { nanoid } from "nanoid";
 
 interface SidebarProps {
   children: React.ReactNode;
@@ -19,7 +20,6 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ children, playlists }: SidebarProps) => {
-  // const pathname = usePathname();
   const player = usePlayer();
 
   const routes = useMemo(
@@ -67,7 +67,7 @@ const Sidebar = ({ children, playlists }: SidebarProps) => {
         <Box>
           <div className="flex flex-col gap-y-4 px-5 py-4">
             {routes.map((item) => (
-              <SidebarItem key={item.label} {...item} />
+              <SidebarItem key={nanoid()} {...item} />
             ))}
           </div>
         </Box>

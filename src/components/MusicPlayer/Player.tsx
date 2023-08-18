@@ -28,7 +28,18 @@ const Player: React.FC<PlayerProps> = ({
   useEffect(() => {
     if (ref.current) {
       if (isPlaying) {
-        ref.current.play();
+        const playPromise = ref.current.play();
+        if (playPromise !== undefined) {
+          playPromise.then(_ => {
+            // Automatic playback started!
+            // Show playing UI.
+            // We can now safely pause video...
+          })
+          .catch(error => {
+            // Auto-play was prevented
+            // Show paused UI.
+          });
+        }
       } else {
         ref.current.pause();
       }

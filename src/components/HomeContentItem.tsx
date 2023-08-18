@@ -2,6 +2,7 @@ import { Album, Artist, Song } from "@/types";
 import ContentItem from "./ContentItem";
 import useOnPlay from "../hooks/useOnPlay";
 import { useNavigate } from "react-router-dom";
+import { nanoid } from "nanoid";
 
 interface HomeContentItemProps {
   items: Song[] | Album[] | Artist[];
@@ -44,7 +45,7 @@ const HomeContentItem: React.FC<HomeContentItemProps> = ({ items }) => {
         ? items.map((item) => (
             <ContentItem
               onClick={(item) => onPlay(item as Song)}
-              key={item.id}
+              key={nanoid()}
               data={item as Song}
             />
           ))
@@ -53,7 +54,7 @@ const HomeContentItem: React.FC<HomeContentItemProps> = ({ items }) => {
               onClick={(item) =>
                 navigate(`/${resolveNavigationPath(item)}/${item.id}`)
               }
-              key={item.id}
+              key={nanoid()}
               data={item as Song}
             />
           ))}

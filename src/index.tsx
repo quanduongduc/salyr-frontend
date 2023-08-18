@@ -5,6 +5,8 @@ import reportWebVitals from "./reportWebVitals";
 import { RouterProvider } from "react-router-dom";
 import router from "./router/AppRouter";
 import axios from "axios";
+import 'react-loading-skeleton/dist/skeleton.css'
+ 
 
 axios.interceptors.request.use(function (config) {
   let token = localStorage.getItem("accessToken");
