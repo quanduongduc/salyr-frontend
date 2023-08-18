@@ -44,7 +44,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
         <img
           src={data.theme_url || "/images/music-placeholder.png"}
           alt="MediaItem"
-          className="object-cover"
+          className="object-cover animate-fade animate-ease-in"
         />
       </div>
       <div className="flex flex-col gap-y-1 overflow-hidden">

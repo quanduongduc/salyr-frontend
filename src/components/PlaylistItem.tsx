@@ -9,7 +9,7 @@ interface MediaItemProps {
 }
 
 const PlaylistItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
-const navigate = useNavigate();    
+  const navigate = useNavigate();
   const handleClick = () => {
     if (onClick) {
       return onClick(data);
@@ -44,11 +44,13 @@ const navigate = useNavigate();
         <img
           src={RANDOM_IMG_URL}
           alt="MediaItem"
-          className="object-cover"
+          className="object-cover animate-fade animate-ease-in"
         />
       </div>
       <div className="flex flex-col gap-y-1 overflow-hidden">
-        <p className="text-white truncate">{data.title[0].toUpperCase() + data.title.slice(1, data.title.length)}</p>
+        <p className="text-white truncate">
+          {data.title[0].toUpperCase() + data.title.slice(1, data.title.length)}
+        </p>
         <p className="text-neutral-400 text-sm truncate">Playlist</p>
       </div>
     </div>

@@ -59,7 +59,7 @@ const ContentItem: React.FC<ContentItemProps> = ({ data, onClick }) => {
         "
       >
         <img
-          className="object-cover"
+          className="object-cover animate-fade animate-ease-in"
           src={
             resolveAttributes(data).cover_img_url ||
             "/images/music-placeholder.png"
@@ -80,16 +80,12 @@ const ContentItem: React.FC<ContentItemProps> = ({ data, onClick }) => {
             truncate
           "
         >
-          {
-            resolveAttributes(data)
-            .artists.length
-            ?
-            "By " + resolveAttributes(data)
-            .artists.map((artist: Artist) => artist.name)
-            .join(",")
-            :
-            "Artist"
-          }
+          {resolveAttributes(data).artists.length
+            ? "By " +
+              resolveAttributes(data)
+                .artists.map((artist: Artist) => artist.name)
+                .join(",")
+            : "Artist"}
           {}
         </p>
       </div>
