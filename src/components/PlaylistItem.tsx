@@ -2,6 +2,7 @@
 import { Playlist } from "@/types"; // Make sure to import the correct type
 import { RANDOM_IMG_URL } from "@/utils/constants";
 import { useNavigate } from "react-router-dom";
+import ImageWithPlaceholder from "./ImageWithPlaceHolder";
 
 interface MediaItemProps {
   data: Playlist; // Update the data type to Playlist
@@ -41,10 +42,10 @@ const PlaylistItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
           overflow-hidden
         "
       >
-        <img
+        <ImageWithPlaceholder
           src={RANDOM_IMG_URL}
           alt="MediaItem"
-          className="object-cover animate-fade animate-ease-in"
+          className="object-cover animate-fade animate-ease-in-out animate-duration-700"
         />
       </div>
       <div className="flex flex-col gap-y-1 overflow-hidden">

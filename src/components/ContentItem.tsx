@@ -1,6 +1,7 @@
 import { Album, Artist, Song } from "@/types";
 
 import PlayButton from "./PlayButton";
+import ImageWithPlaceholder from "./ImageWithPlaceHolder";
 
 interface ContentItemProps {
   data: Song | Album | Artist;
@@ -58,14 +59,14 @@ const ContentItem: React.FC<ContentItemProps> = ({ data, onClick }) => {
           overflow-hidden
         "
       >
-        <img
-          className="object-cover animate-fade animate-ease-in"
+        <ImageWithPlaceholder
+          className="object-cover animate-fade animate-ease-in-out animate-duration-700"
           src={
             resolveAttributes(data).cover_img_url ||
             "/images/music-placeholder.png"
           }
           alt="song_image"
-        ></img>
+        />
       </div>
       <div className="flex flex-col items-start w-full pt-4 gap-y-1">
         <p className="font-semibold truncate w-full">

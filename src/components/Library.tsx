@@ -61,7 +61,8 @@ const Library: React.FC<LibraryProps> = ({ playlists }) => {
                 data={playlist}
               />
             ))
-          : Array.from(Array(10), (_, i) => (
+          : user &&
+            Array.from(Array(10), (_, i) => (
               <SkeletonSideItem key={nanoid()} />
             ))}
       </div>

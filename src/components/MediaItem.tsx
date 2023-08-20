@@ -1,6 +1,7 @@
 "use client";
 import { Song } from "@/types";
 import usePlayer from "@/hooks/usePlayer";
+import ImageWithPlaceholder from "./ImageWithPlaceHolder";
 
 interface MediaItemProps {
   data: Song;
@@ -38,13 +39,15 @@ const MediaItem: React.FC<MediaItemProps> = ({ data, onClick }) => {
           rounded-md 
           max-h-[48px] 
           max-w-[48px] 
+          h-[48px]
+          w-[48px]
           overflow-hidden
         "
       >
-        <img
+        <ImageWithPlaceholder
           src={data.theme_url || "/images/music-placeholder.png"}
           alt="MediaItem"
-          className="object-cover animate-fade animate-ease-in"
+          className="object-cover animate-fade animate-ease-in-out animate-duration-700"
         />
       </div>
       <div className="flex flex-col gap-y-1 overflow-hidden">
