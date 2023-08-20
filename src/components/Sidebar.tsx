@@ -2,11 +2,7 @@
 
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
-import { twMerge } from "tailwind-merge";
-// import { usePathname } from "next/navigation";
-
 import { Playlist } from "@/types";
-import usePlayer from "@/hooks/usePlayer";
 
 import SidebarItem from "./SidebarItem";
 import Box from "./Box";
