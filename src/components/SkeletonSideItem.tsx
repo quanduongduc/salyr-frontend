@@ -1,5 +1,5 @@
 import { SKELETON_STYLE } from "@/utils/constants";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 
 const SkeletonSideItem = () => {
   return (
