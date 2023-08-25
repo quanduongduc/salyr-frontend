@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 // import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 // import { useRouter } from "next/navigation";
 
-import useUploadModal from '@/hooks/useUploadModal';
+import useUploadModal from "@/hooks/useUploadModal";
 import { useUser } from "@/hooks/useUser";
 
-import Modal from './Modal';
-import Input from './Input';
-import Button from './Button';
+import Modal from "./Modal";
+import Input from "./Input";
+import Button from "./Button";
 import { postData } from "@/utils/helpers";
 import { PLAYLIST_ENDPOINT } from "@/utils/constants";
 
@@ -21,14 +21,10 @@ const UploadModal = () => {
   const uploadModal = useUploadModal();
   const { user } = useUser();
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-  } = useForm<FieldValues>({
+  const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: {
-      title: '',
-    }
+      title: "",
+    },
   });
 
   const onChange = (open: boolean) => {
@@ -36,30 +32,33 @@ const UploadModal = () => {
       reset();
       uploadModal.onClose();
     }
-  }
+  };
 
   const onSubmit: SubmitHandler<FieldValues> = async (values) => {
     try {
       setIsLoading(true);
-      const title = values.title
+      const title = values.title;
       if (!title || !user) {
-        toast.error('Missing fields')
+        toast.error("Missing fields");
         return;
       }
 
-      const response = await postData({url :`${PLAYLIST_ENDPOINT}`, data : {title}})
+      const response = await postData({
+        url: `${PLAYLIST_ENDPOINT}/`,
+        data: { title },
+      });
       if (response) {
-        toast.success('create album success')
-        uploadModal.onClose()
+        toast.success("create album success");
+        uploadModal.onClose();
         return;
-      }        
+      }
       setIsLoading(false);
     } catch (error) {
-      toast.error('Something went wrong');
+      toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <Modal
@@ -68,14 +67,11 @@ const UploadModal = () => {
       isOpen={uploadModal.isOpen}
       onChange={onChange}
     >
-      <form 
-        onSubmit={handleSubmit(onSubmit)} 
-        className="flex flex-col gap-y-4"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
         <Input
           id="title"
           disabled={isLoading}
-          {...register('title', { required: true })}
+          {...register("title", { required: true })}
           placeholder="PlayList title"
         />
         <Button disabled={isLoading} type="submit">
@@ -84,6 +80,6 @@ const UploadModal = () => {
       </form>
     </Modal>
   );
-}
+};
 
 export default UploadModal;

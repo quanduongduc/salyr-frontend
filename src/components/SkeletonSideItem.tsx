@@ -1,4 +1,5 @@
-import Skeleton from "react-loading-skeleton";
+import { SKELETON_STYLE } from "@/utils/constants";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const SkeletonSideItem = () => {
   return (
@@ -24,12 +25,14 @@ const SkeletonSideItem = () => {
         "
       >
         <Skeleton
+          baseColor="#232628"
+          highlightColor="#1e2021"
           containerClassName="w-full h-full"
-          style={{ height: "100%" }}
+          style={{ ...SKELETON_STYLE, height: "100%" }}
         />
       </div>
       <div className="flex flex-col gap-y-1 overflow-hidden w-full">
-        <Skeleton count={2} />
+        <Skeleton count={2} style={SKELETON_STYLE} />
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import { SKELETON_STYLE } from "@/utils/constants";
 import Skeleton from "react-loading-skeleton";
 
 const ContentItemSkeleton = () => {
@@ -30,23 +31,17 @@ const ContentItemSkeleton = () => {
           overflow-hidden
         "
       >
-        <Skeleton containerClassName="block w-full h-full"  height="100%"/>
+        <Skeleton
+          containerClassName="block w-full h-full"
+          style={{ ...SKELETON_STYLE, height: "100%" }}
+        />
       </div>
       <div className="flex flex-col items-start w-full pt-4 gap-y-1">
-        <p className="font-semibold truncate w-full">
-            <Skeleton/>  
-        </p>
-        <p
-          className="
-            text-neutral-400 
-            text-sm 
-            pb-4 
-            w-full 
-            truncate
-          "
-        >
-            <Skeleton/>
-        </p>
+        <Skeleton
+          count={2}
+          containerClassName="block w-full h-full"
+          style={SKELETON_STYLE}
+        />
       </div>
       <div
         className="
@@ -54,8 +49,7 @@ const ContentItemSkeleton = () => {
           bottom-24 
           right-5
         "
-      >
-      </div>
+      ></div>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { toast } from 'react-hot-toast';
 
 export const getURL = () => {
     let url =
-        process.env.API_URL ? process.env.API_URL : "http://localhost:8000";
+        process.env.API_URL ? process.env.API_URL : "https://api.salyr.online/";
     // Make sure to include `https://` when not localhost.
     url = url.includes('http') ? url : `https://${url}`;
     // Make sure to including trailing `/`.
